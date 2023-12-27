@@ -1,30 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { getAllTodos } from '../services/TodoService';
 
 function ListTodoComponent() {
+
+    const[todos, setTodos] = useState([]); // now todos state variable initial value is []
     
-    const dummyData = [
-        {
-            "id":1,
-            "title":"Learn Core Java",
-            "description":"Learn Core Java As Much As You Can",
-            "completed":false
-        },
-        {
-            "id":2,
-            "title":"Learn Spring Boot",
-            "description":"Learn Spring Boot As Much As You Can",
-            "completed":false
-        },
-        {
-            "id":1,
-            "title":"Learn Core Java",
-            "description":"Learn React As Much As You Can",
-            "completed":false
-        }
-    ]
+    useEffect(()=>{
+        listTodos();
+    },[]);
 
-    const[todos, setTodos] = useState(dummyData); //todos - state variable, dummyData - initial value pass to useState Hook
-
+    function listTodos() {
+        getAllTodos().then((response)=>{
+            setTodos(response.data);
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
 
   return (
     <div className='container'>
