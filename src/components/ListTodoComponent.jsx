@@ -21,7 +21,7 @@ function ListTodoComponent() {
     <div className='container'>
         <h2 className='text-center'>List of Todos</h2>
         <div>
-            <table className='table table-dark table-bordered table-striped table-hover'>
+            <table className='table table-bordered table-striped table-hover'>
                 <thead>
                     <tr>
                         <th>Todo Title</th>
