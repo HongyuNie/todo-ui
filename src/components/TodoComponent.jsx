@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { getTodo, saveTodo } from '../services/TodoService';
+import { getTodo, saveTodo, updateTodo } from '../services/TodoService';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const TodoComponent = () => {
@@ -15,13 +15,20 @@ const TodoComponent = () => {
         const todo = { title, description, completed };
         // console.log(todo);
 
-        saveTodo(todo).then(response => {
-            // console.log(response.data)
-            navigate('/todos');
-        }).catch(error => {
-            console.log(error);
-        })
+        if (id) {
+            updateTodo(id, todo).then((response) => {
+                navigate('/todos');
+            }).catch(error=>console.log(error))
+        }
+        else {
+            saveTodo(todo).then(response => {
+                // console.log(response.data)
+                navigate('/todos');
+            }).catch(error =>console.log(error))
+        }
     }
+
+        
 
     function pageTitle() {
         if(id) {
