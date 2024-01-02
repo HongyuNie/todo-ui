@@ -8,22 +8,20 @@ const RegisterComponent = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-function handleRegistrationForm(e) {
+  function handleRegistrationForm(e) {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const register = { name, username, email, password }
+    const register = { name, username, email, password }
 
-  console.log(register);
+    console.log(register);
 
-  registerAPICall(register).then((response) => {
-    console.log(response.data);
-  }).catch(error => {
-    console.error(error);
-  })
-}
-
-
+    registerAPICall(register).then((response) => {
+      console.log(response.data);
+    }).catch(error => {
+      console.error(error);
+    })
+  }
 
   return (
     <div className='container'>
