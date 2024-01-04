@@ -11,6 +11,7 @@ const LoginComponent = () => {
 
   async function handleLoginForm(e){
     e.preventDefault();
+
     const loginObj = {username, password}
     // console.log(loginObj)
     await loginAPICall(username, password).then(response=>
@@ -18,9 +19,11 @@ const LoginComponent = () => {
         console.log(response.data);
         // const token = 'Basic ' + window.btoa(username + ":" + password);
         const token = 'Bearer ' + response.data.accessToken;
+
+        const role  = response.data.role;
         storeToken(token);
 
-        saveLoggedInUser(username);
+        saveLoggedInUser(username, role);
 
         navigator("/todos");
 

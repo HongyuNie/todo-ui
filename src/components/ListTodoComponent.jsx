@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { completeTodo, inCompleteTodo,deleteTodo, getAllTodos } from '../services/TodoService';
 import { useNavigate } from 'react-router-dom';
+import { isAdminUser } from '../services/AuthService';
 
 function ListTodoComponent() {
 
     const[todos, setTodos] = useState([]); // now todos state variable initial value is []
 
     const navigate = useNavigate();
+
+    const isAdmin = isAdminUser();
     
     useEffect(()=>{
         listTodos();
@@ -51,7 +54,9 @@ function ListTodoComponent() {
   return (
     <div className='container'>
         <h2 className='text-center'>List of Todos</h2>
-        <button className='btn btn-primary mb-2' onClick={addNewTodo}>Add Todo</button>
+        {
+            isAdmin && <button className='btn btn-primary mb-2' onClick={addNewTodo}>Add Todo</button>
+        }
         <div>
             <table className='table table-bordered table-striped table-hover'>
                 <thead>
@@ -70,8 +75,13 @@ function ListTodoComponent() {
                                 <td>{todo.description}</td>
                                 <td>{todo.completed ? "Yes" : "No"}</td>
                                 <td>
-                                    <button className='btn btn-info' onClick={()=>updateTodo(todo.id)}>Update</button>
-                                    <button className='btn btn-danger' onClick={()=>removeTodo(todo.id)} style={{marginLeft:"10px"}}>Delete</button>
+                                    {
+                                        isAdmin && <button className='btn btn-info' onClick={()=>updateTodo(todo.id)}>Update</button>
+                                    }
+                                    {
+                                        isAdmin && <button className='btn btn-danger' onClick={()=>removeTodo(todo.id)} style={{marginLeft:"10px"}}>Delete</button>
+                                    }
+                                    
                                     <button className='btn btn-success' onClick={()=>markCompleteTodo(todo.id)} style={{marginLeft:"10px"}}>Complete</button>
                                     <button className='btn btn-info' onClick={()=>markIncompleteTodo(todo.id)} style={{marginLeft:"10px"}}>In Complete</button>
                                 </td>
